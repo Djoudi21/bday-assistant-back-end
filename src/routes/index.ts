@@ -20,4 +20,11 @@ export async function router (fastify: FastifyInstance): Promise<void> {
       await contactsController.listContacts(request, reply)
     }
   })
+  fastify.route({
+    method: 'POST',
+    url: '/api/v1/contacts',
+    handler: async (request, reply) => {
+      await contactsController.createContact(request, reply)
+    }
+  })
 }
