@@ -4,12 +4,13 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 export class FetchContactsRepository implements ContactsRepository {
-  async createContact (contact: NewContact): Promise<CreateContactResponse> {
+  async createContact (contact: NewContact, userId: number): Promise<CreateContactResponse> {
     const createdContact = await prisma.contact.create({
       data: {
         name: contact.name,
         birthday: contact.birthday,
-        description: contact.description
+        description: contact.description,
+        userId
       }
     })
 
@@ -21,8 +22,12 @@ export class FetchContactsRepository implements ContactsRepository {
     }
   }
 
-  async listContacts (): Promise<ListContactsResponse> {
-    const contacts = await prisma.contact.findMany()
+  async listContacts (userId: number): Promise<ListContactsResponse> {
+    const contacts = await prisma.contact.findMany({
+      where: {
+        userId
+      }
+    })
 
     return {
       data: {

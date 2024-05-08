@@ -14,20 +14,24 @@ datasource db {
 }
 
 model Contact {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name     String   @db.VarChar(255)
-  description   String
-  birthday String @db.VarChar(255)
-  // author    User     @relation(fields: [authorId], references: [id])
-  // authorId  Int
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String   @db.VarChar(255)
+  description String
+  birthday    DateTime
+  userId      Int
+  User        User     @relation(fields: [userId], references: [id])
 }
 
-// model User {
-//   id      Int      @id @default(autoincrement())
-//   email   String   @unique
-//   name    String?
-//   posts   Post[]
-//   profile Profile?
-// }
+model User {
+  id       Int       @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  email    String    @unique
+  password  String
+  firstname     String?
+  lastname     String?
+  authToolUserId  String? @unique
+  contacts Contact[]
+}

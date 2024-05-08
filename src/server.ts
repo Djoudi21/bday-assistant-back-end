@@ -1,18 +1,22 @@
 import Fastify from 'fastify'
 import cors from '@fastify/cors'
 import 'dotenv/config'
-import { router } from './routes'
+import { authRouter } from './routes/auth'
+import { contactsRouter } from './routes/contacts'
+import { clerkPlugin } from '@clerk/fastify'
+import * as dotenv from 'dotenv'
 
+dotenv.config()
 const port = Number(process.env.PORT)
 const host = process.env.HOST
 const fastify = Fastify({
-  logger: true,
+  logger: true
 })
 
-void fastify.register(router)
-void fastify.register(cors, {
-  // Add any CORS configuration if needed
-})
+void fastify.register(authRouter)
+void fastify.register(contactsRouter)
+void fastify.register(clerkPlugin)
+void fastify.register(cors, {})
 
 // Run the server!
 fastify.listen({ port, host }, function (err, address) {

@@ -1,6 +1,6 @@
 export interface Contact {
   name: string
-  birthday: string
+  birthday: Date
   description: string
   id: number
   createdAt: Date
@@ -9,7 +9,7 @@ export interface Contact {
 
 export interface NewContact {
   name: string
-  birthday: string
+  birthday: Date
   description: string
 }
 

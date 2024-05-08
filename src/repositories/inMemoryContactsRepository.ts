@@ -3,8 +3,8 @@ import { type Contact, type CreateContactResponse, type ListContactsResponse, ty
 
 export class InMemoryContactsRepository implements ContactsRepository {
   public contacts: Contact[] = [
-    { name: 'Abdel Djoudi', birthday: '1990-01-01', id: 1, description: 'descr', createdAt: new Date(), updatedAt: new Date() },
-    { name: 'Abdel Djoudi', birthday: '1990-01-01', id: 2, description: 'descr', createdAt: new Date(), updatedAt: new Date() }
+    { name: 'Abdel Djoudi', birthday: new Date(), id: 1, description: 'descr', createdAt: new Date(), updatedAt: new Date() },
+    { name: 'Abdel Djoudi', birthday: new Date(), id: 2, description: 'descr', createdAt: new Date(), updatedAt: new Date() }
   ]
 
   async listContacts (): Promise<ListContactsResponse> {
