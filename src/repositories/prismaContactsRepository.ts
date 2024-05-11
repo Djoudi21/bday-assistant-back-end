@@ -3,7 +3,7 @@ import { type CreateContactResponse, type ListContactsResponse, type NewContact 
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
-export class FetchContactsRepository implements ContactsRepository {
+export class PrismaContactsRepository implements ContactsRepository {
   async createContact (contact: NewContact, userId: number): Promise<CreateContactResponse> {
     const createdContact = await prisma.contact.create({
       data: {

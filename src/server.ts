@@ -13,7 +13,6 @@ const host = process.env.HOST
 const fastify = Fastify({
   logger: true
 })
-
 void fastify.register(authRouter)
 void fastify.register(contactsRouter)
 void fastify.register(tokensRouter)

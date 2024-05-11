@@ -4,7 +4,7 @@ import { type User } from '../types/auth'
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
-export class FetchTokenRepository implements TokensRepository {
+export class PrismaTokenRepository implements TokensRepository {
   async getPushToken (): Promise<GetPushTokenResponse> {
     return {
       data: {

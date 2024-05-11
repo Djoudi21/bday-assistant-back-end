@@ -12,8 +12,9 @@ export class ListContactsUseCase {
   }
 
   async execute (authToolUserId: string): Promise<ListContactsResponse> {
-    const userId = await this.authRepository.getUserIdByAuthToolUserId(authToolUserId)
-    if (userId === null) {
+    const response = await this.authRepository.getUserIdByAuthToolUserId(authToolUserId)
+    const userId = response.data.user?.id
+    if (userId === null || userId === undefined) {
       throw new Error(`User with authToolUserId ${authToolUserId} not found`)
     }
     return await this.contactsRepository.listContacts(userId)
