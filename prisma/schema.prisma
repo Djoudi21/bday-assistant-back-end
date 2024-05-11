@@ -25,13 +25,23 @@ model Contact {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  email    String    @unique
-  password  String
-  firstname     String?
-  lastname     String?
-  authToolUserId  String? @unique
-  contacts Contact[]
+  id             Int       @id @default(autoincrement())
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  email          String    @unique
+  password       String
+  firstName      String
+  lastName       String
+  authToolUserId String?   @unique
+  contacts       Contact[]
+  Token          Token[]
+}
+
+model Token {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  token     String   @unique
+  userId    Int
+  User      User     @relation(fields: [userId], references: [id])
 }

@@ -8,7 +8,7 @@ export class RegisterUseCase {
     this.authRepository = authRepository
   }
 
-  async execute (credentials: RegisterCredentials, authToolUserId: string): Promise<RegisterUserResponse> {
-    return await this.authRepository.register(credentials, authToolUserId)
+  async execute (credentials: RegisterCredentials): Promise<RegisterUserResponse> {
+    return await this.authRepository.register(credentials)
   }
 }

@@ -14,10 +14,9 @@ export class AuthController {
     const credentials: RegisterCredentials = {
       ...req.body.data
     }
-    const authToolUserId: string | undefined = req.query.authToolUserId
     const authRepository = new FetchAuthRepository()
     const registerUseCase = new RegisterUseCase(authRepository)
-    const response = await registerUseCase.execute(credentials, authToolUserId ?? '')
+    const response = await registerUseCase.execute(credentials)
     return reply.status(response.data.status).send(response)
   }
 }

@@ -4,15 +4,14 @@ import { type RegisterCredentials, type RegisterUserResponse } from '../types/au
 const prisma = new PrismaClient()
 
 export class FetchAuthRepository implements AuthRepository {
-  async register (credentials: RegisterCredentials, authToolUserId: string): Promise<RegisterUserResponse> {
-
+  async register (credentials: RegisterCredentials): Promise<RegisterUserResponse> {
     await prisma.user.create({
       data: {
-        firstname: credentials.firstname,
-        lastname: credentials.lastname,
+        firstName: credentials.firstName,
+        lastName: credentials.lastName,
         email: credentials.email,
         password: credentials.password,
-        authToolUserId
+        authToolUserId: credentials.authToolUserId
       }
     })
     return {

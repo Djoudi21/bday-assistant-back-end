@@ -4,8 +4,9 @@ export interface User {
   updatedAt: Date
   email: string
   password: string
-  firstname?: string
-  lastname?: string
+  firstName: string
+  lastName: string
+  authToolUserId: string
 }
 
 export interface RegisterUserResponse {
@@ -17,6 +18,7 @@ export interface RegisterUserResponse {
 export interface RegisterCredentials {
   email: string
   password: string
-  firstname?: string
-  lastname?: string
+  firstName: string
+  lastName: string
+  authToolUserId: string
 }
