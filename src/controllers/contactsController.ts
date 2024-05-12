@@ -3,6 +3,8 @@ import { type CreateContactResponse, type ListContactsResponse, type NewContact 
 import { CreateContactUseCase } from '../use-cases/contacts/createContactUseCase/createContactUseCase'
 import { PrismaContactsRepository } from '../repositories/prismaContactsRepository'
 import { PrismaAuthRepository } from '../repositories/prismaAuthRepository'
+import { type Contact } from '@prisma/client'
+import { UpdateContactUseCase } from '../use-cases/contacts/updateContactUseCase/updateContactUseCase'
 
 export class ContactsController {
   async listContacts (req: any, reply: any): Promise<ListContactsResponse> {
@@ -21,6 +23,14 @@ export class ContactsController {
     const authRepository = new PrismaAuthRepository()
     const createContactUseCase = new CreateContactUseCase(contactsRepository, authRepository)
     const response = await createContactUseCase.execute(contact, userId)
+    return reply.status(response.data.status).send(response)
+  }
+
+  async updateContact (req: any, reply: any): Promise<CreateContactResponse> {
+    const contact: Contact = req.body.data
+    const contactsRepository = new PrismaContactsRepository()
+    const updateContactUseCase = new UpdateContactUseCase(contactsRepository)
+    const response = await updateContactUseCase.execute(contact)
     return reply.status(response.data.status).send(response)
   }
 }
