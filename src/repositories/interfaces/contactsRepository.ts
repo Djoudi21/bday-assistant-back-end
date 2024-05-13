@@ -2,8 +2,8 @@ import {
   type NewContact,
   type ListContactsResponse,
   type CreateContactResponse,
-  Contact,
-  UpdateContactResponse,
+  type Contact,
+  type UpdateContactResponse
 } from '../../types/contacts'
 
 export interface ContactsRepository {

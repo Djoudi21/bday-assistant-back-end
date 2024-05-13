@@ -14,27 +14,29 @@ datasource db {
 }
 
 model Contact {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  name        String   @db.VarChar(255)
-  description String
-  birthday    DateTime
-  userId      Int
-  User        User     @relation(fields: [userId], references: [id])
+  id                   Int                   @id @default(autoincrement())
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  name                 String                @db.VarChar(255)
+  description          String
+  birthday             DateTime
+  userId               Int
+  User                 User                  @relation(fields: [userId], references: [id])
+  BirthdayNotification BirthdayNotification?
 }
 
 model User {
-  id             Int       @id @default(autoincrement())
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  email          String    @unique
-  password       String
-  firstName      String
-  lastName       String
-  authToolUserId String?   @unique
-  contacts       Contact[]
-  Token          Token[]
+  id                   Int                   @id @default(autoincrement())
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  email                String                @unique
+  password             String
+  firstName            String
+  lastName             String
+  authToolUserId       String?               @unique
+  contacts             Contact[]
+  Token                Token[]
+  BirthdayNotification BirthdayNotification?
 }
 
 model Token {
@@ -44,4 +46,17 @@ model Token {
   token     String   @unique
   userId    Int
   User      User     @relation(fields: [userId], references: [id])
+}
+
+model BirthdayNotification {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  toSendAt  DateTime
+  message   String
+  isSent    Boolean  @default(false)
+  contact   Contact  @relation(fields: [contactId], references: [id])
+  contactId Int      @unique
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int      @unique
 }

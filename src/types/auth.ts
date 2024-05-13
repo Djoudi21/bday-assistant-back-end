@@ -6,7 +6,7 @@ export interface User {
   password: string
   firstName: string
   lastName: string
-  authToolUserId: string | undefined
+  authToolUserId: string | null
 }
 
 export interface UserWithoutPassword {
@@ -37,7 +37,7 @@ export interface RegisterCredentials {
   password: string
   firstName: string
   lastName: string
-  authToolUserId: string | undefined
+  authToolUserId: string | null
 }
 
 export interface LoginUserResponse {

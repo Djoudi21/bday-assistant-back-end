@@ -36,6 +36,20 @@ CREATE TABLE "Token" (
     CONSTRAINT "Token_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "BirthdayNotification" (
+    "id" SERIAL NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "toSendAt" TIMESTAMP(3) NOT NULL,
+    "message" TEXT NOT NULL,
+    "isSent" BOOLEAN NOT NULL DEFAULT false,
+    "contactId" INTEGER NOT NULL,
+    "userId" INTEGER NOT NULL,
+
+    CONSTRAINT "BirthdayNotification_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
@@ -45,8 +59,20 @@ CREATE UNIQUE INDEX "User_authToolUserId_key" ON "User"("authToolUserId");
 -- CreateIndex
 CREATE UNIQUE INDEX "Token_token_key" ON "Token"("token");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "BirthdayNotification_contactId_key" ON "BirthdayNotification"("contactId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "BirthdayNotification_userId_key" ON "BirthdayNotification"("userId");
+
 -- AddForeignKey
 ALTER TABLE "Contact" ADD CONSTRAINT "Contact_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Token" ADD CONSTRAINT "Token_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "BirthdayNotification" ADD CONSTRAINT "BirthdayNotification_contactId_fkey" FOREIGN KEY ("contactId") REFERENCES "Contact"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "BirthdayNotification" ADD CONSTRAINT "BirthdayNotification_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
