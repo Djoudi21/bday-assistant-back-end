@@ -1,6 +1,9 @@
-import { PrismaClient } from '@prisma/client'
+import { type BirthdayNotification, PrismaClient } from '@prisma/client'
 import { type BirthdayNotificationsRepository } from './interfaces/birthdayNotificationsRepository'
-import { type GetBirthdayNotificationsResponse } from '../types/birthdayNotifications'
+import {
+  type GetBirthdayNotificationsResponse,
+  type UpdateBirthdayNotificationsResponse,
+} from '../types/birthdayNotifications'
 const prisma = new PrismaClient()
 
 export class PrismaBirthdayNotificationsRepository implements BirthdayNotificationsRepository {
@@ -38,6 +41,38 @@ export class PrismaBirthdayNotificationsRepository implements BirthdayNotificati
       data: {
         status: 200,
         birthdayNotifications: mappedNotifications
+      }
+    }
+  }
+
+  async setUserNotification (notificationId: BirthdayNotification['id']): Promise<UpdateBirthdayNotificationsResponse> {
+    const birthdayNotification = await prisma.birthdayNotification.findUnique({
+      where: {
+        id: notificationId
+      }
+    })
+
+    if (birthdayNotification === null) {
+      return {
+        data: {
+          status: 500
+        }
+      }
+    }
+    const { isSent, ...rest } = birthdayNotification
+    await prisma.birthdayNotification.update({
+      where: {
+        id: rest.id
+      },
+      data: {
+        isSent: true,
+        ...rest
+      }
+    })
+
+    return {
+      data: {
+        status: 200
       }
     }
   }

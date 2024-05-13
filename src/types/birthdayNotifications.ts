@@ -20,3 +20,9 @@ export interface GetBirthdayNotificationsResponse {
     birthdayNotifications: BirthdayNotification[] | []
   }
 }
+
+export interface UpdateBirthdayNotificationsResponse {
+  data: {
+    status: number
+  }
+}

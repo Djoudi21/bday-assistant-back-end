@@ -3,8 +3,7 @@ import { CronJob } from 'cron'
 import { BirthdayNotificationsController } from '../controllers/birthdayNotificationsController'
 
 const expo = new Expo()
-const birthdayNotificationsController = new BirthdayNotificationsController()
-const notificationTime = '00 8 * * *'
+const notificationTime = '02 4 * * *'
 
 const compareDates = (date1: Date, date2: Date): boolean => {
   const sameYear = date1.getFullYear() === date2.getFullYear()
@@ -39,6 +38,7 @@ const extractCronComponents = (cronExpression: string): {
 }
 
 export const checkPendingTasks = new CronJob(notificationTime, async () => {
+  const birthdayNotificationsController = new BirthdayNotificationsController()
   const userNotifications = await birthdayNotificationsController.getUserNotifications() // Get scheduled tasks for a specific user
   for (const notification of userNotifications.data.birthdayNotifications) {
     const notificationDate = new Date(notification.toSendAt)
@@ -54,6 +54,7 @@ export const checkPendingTasks = new CronJob(notificationTime, async () => {
           body: ' body of the notification'
         }
       ])
+      await birthdayNotificationsController.setUserNotification(notification.id)
     }
   }
 })
