@@ -13,7 +13,7 @@ const compareDates = (date1: Date, date2: Date): boolean => {
   return sameYear && sameMonth && sameDay
 }
 
-const formatCron = (notificationTime: string) => {
+const formatCron = (notificationTime: string): Date => {
   const formatedCron = extractCronComponents(notificationTime)
   const currentDate = new Date()
   currentDate.setMinutes(formatedCron.minute)
@@ -21,7 +21,13 @@ const formatCron = (notificationTime: string) => {
   return currentDate
 }
 
-const extractCronComponents = (cronExpression: string) => {
+const extractCronComponents = (cronExpression: string): {
+  minute: number
+  hour: number
+  dayOfMonth: number
+  month: number
+  dayOfWeek: number
+} => {
   const cronComponents = cronExpression.split(' ')
   return {
     minute: Number(cronComponents[0]),
