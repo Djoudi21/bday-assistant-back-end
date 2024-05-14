@@ -10,4 +10,5 @@ export interface ContactsRepository {
   listContacts: (userId: number) => Promise<ListContactsResponse>
   createContact: (contact: NewContact, userId: number) => Promise<CreateContactResponse>
   updateContact: (contact: Contact) => Promise<UpdateContactResponse>
+  deleteContact: (contactId: Contact['id']) => Promise<UpdateContactResponse>
 }

@@ -25,4 +25,11 @@ export async function contactsRouter (fastify: FastifyInstance): Promise<void> {
       await contactsController.updateContact(request, reply)
     }
   })
+  fastify.route({
+    method: 'DELETE',
+    url: '/api/v1/contacts/:contactId',
+    handler: async (request, reply) => {
+      await contactsController.deleteContact(request, reply)
+    }
+  })
 }

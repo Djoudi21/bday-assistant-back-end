@@ -73,4 +73,42 @@ export class PrismaContactsRepository implements ContactsRepository {
       }
     }
   }
+
+  async deleteContact (contactId: Contact['id']): Promise<UpdateContactResponse> {
+    const notifications = await prisma.birthdayNotification.findMany({
+      where: {
+        contactId
+      }
+    })
+
+    if (notifications.length > 0) {
+      await prisma.birthdayNotification.deleteMany({
+        where: {
+          contactId
+        }
+      })
+    }
+
+    const deleteContact = await prisma.contact.delete({
+      where: {
+        id: contactId
+      }
+    })
+
+    if (deleteContact === null) {
+      return {
+        data: {
+          status: 404,
+          contact: undefined
+        }
+      }
+    }
+
+    return {
+      data: {
+        status: 200,
+        contact: deleteContact
+      }
+    }
+  }
 }
